@@ -10,7 +10,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainScreen />} />
-          <Route path="/user/:itemId" element={<UserScreen />} />
+          <Route path="/user/:userId" element={<UserScreen />} />
           <Route path="/login" element={<LoginScreen />} />
           <Route path="/*" element={<NotFoundScreen />} />
         </Routes>
