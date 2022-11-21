@@ -10,5 +10,9 @@ namespace CalendarApi.Models
     [Required]
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
+
+    public List<User> Attendees { get; set; }
+
+    public String Header { get; set; }
   }
 }
