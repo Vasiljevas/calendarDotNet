@@ -1,9 +1,30 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../api/auth";
+import { User } from "../utils/types";
 
-export const LoginScreen = () => {
+type Props = {
+  onLogin: (user: User) => void;
+};
+
+export const LoginScreen = ({ onLogin }: Props) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    try {
+      const user = await login({ email, password });
+      onLogin(user);
+      navigate("/");
+    } catch (e) {
+      if (e instanceof Error) {
+        alert(e.message);
+      } else {
+        alert("Failed to login for a weird reason!");
+      }
+    }
+  };
 
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -45,7 +66,9 @@ export const LoginScreen = () => {
               />
             </div>
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Login</button>
+              <button className="btn btn-primary" onClick={handleLogin}>
+                Login
+              </button>
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@ using System;
 using CalendarApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CalendarApi.Migrations
 {
     [DbContext(typeof(CalendarDbContext))]
-    partial class CalendarDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221203160713_blembauseriai")]
+    partial class blembauseriai
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
@@ -42,12 +45,14 @@ namespace CalendarApi.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Header")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -74,6 +79,7 @@ namespace CalendarApi.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Message")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

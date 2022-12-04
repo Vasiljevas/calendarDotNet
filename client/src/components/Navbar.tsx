@@ -1,6 +1,13 @@
 import { Link } from "react-router-dom";
+import { UserRole } from "../utils/enums";
+import { User } from "../utils/types";
 
-export const NavBar = () => {
+type Props = {
+  onLogout: () => void;
+  user?: User;
+};
+
+export const NavBar = ({ onLogout, user }: Props) => {
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -28,12 +35,11 @@ export const NavBar = () => {
             <li>
               <Link to="/login">Login</Link>
             </li>
-            <li>
-              <a>Kažkas 2</a>
-            </li>
-            <li>
-              <a>Kažkas 3</a>
-            </li>
+            {user?.role === UserRole.Admin && (
+              <li>
+                <Link to="/admin">Admin</Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>
@@ -43,22 +49,9 @@ export const NavBar = () => {
         </Link>
       </div>
       <div className="navbar-end">
-        <button className="btn btn-ghost btn-circle">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
-        </button>
+        {user && (
+          <div className="text-base normal-case">Hello, {user.name}!</div>
+        )}
         <button className="btn btn-ghost btn-circle">
           <div className="indicator">
             <svg
@@ -77,6 +70,9 @@ export const NavBar = () => {
             </svg>
             <span className="badge badge-xs badge-primary indicator-item"></span>
           </div>
+        </button>
+        <button onClick={onLogout}>
+          <div className="text-base btn-ghost btn normal-case">Logout</div>
         </button>
       </div>
     </div>

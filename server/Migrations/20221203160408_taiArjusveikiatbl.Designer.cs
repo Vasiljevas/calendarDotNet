@@ -3,6 +3,7 @@ using System;
 using CalendarApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CalendarApi.Migrations
 {
     [DbContext(typeof(CalendarDbContext))]
-    partial class CalendarDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221203160408_taiArjusveikiatbl")]
+    partial class taiArjusveikiatbl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
@@ -42,12 +45,14 @@ namespace CalendarApi.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Header")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -70,15 +75,19 @@ namespace CalendarApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid>("InviteeId")
+                    b.Property<int>("InviteeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("InviteeId1")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Message")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InviteeId");
+                    b.HasIndex("InviteeId1");
 
                     b.ToTable("Invitations");
                 });
@@ -135,7 +144,7 @@ namespace CalendarApi.Migrations
                 {
                     b.HasOne("CalendarApi.Models.User", "Invitee")
                         .WithMany("Invitations")
-                        .HasForeignKey("InviteeId")
+                        .HasForeignKey("InviteeId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
