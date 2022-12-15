@@ -23,16 +23,30 @@ namespace CalendarApi.Repositories
       return true;
     }
 
-    public bool DeleteUser(User user)
+    public bool DeleteUser(Guid id)
     {
-      throw new NotImplementedException();
+      User userToDelete = _context.Users.ToList<User>().First(e => e.Id == id);
+      _context.Users.Remove(userToDelete);
+      _context.SaveChanges();
+      return true;
     }
-
+    public User UpdateUser(User user)
+    {
+      _context.Users.Update(user);
+      _context.SaveChanges();
+      return user;
+    }
     public User GetUserById(Guid id)
     {
       return _context.Users.ToList().First(u => u.Id == id);
     }
 
     public IEnumerable<User> GetUsers() => _context.Users.ToList();
+
+    public IEnumerable<Event> GetEventsByUserId(Guid id)
+    {
+      var user = _context.Users.ToList().First(u => u.Id == id);
+      return user.Events;
+    }
   }
 }

@@ -5,7 +5,7 @@
 namespace CalendarApi.Migrations
 {
     /// <inheritdoc />
-    public partial class taiArjusveikiatbl : Migration
+    public partial class deletedall : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

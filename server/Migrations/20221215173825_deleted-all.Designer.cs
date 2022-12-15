@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CalendarApi.Migrations
 {
     [DbContext(typeof(CalendarDbContext))]
-    [Migration("20221121182057_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20221215173825_deleted-all")]
+    partial class deletedall
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,36 +37,31 @@ namespace CalendarApi.Migrations
 
             modelBuilder.Entity("CalendarApi.Models.Event", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("CalendarId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Header")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("StartTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CalendarId");
 
-                    b.ToTable("Event");
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("CalendarApi.Models.Invitation", b =>
@@ -75,53 +70,51 @@ namespace CalendarApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("InviteeId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("InviteeId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Message")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("InviteeId");
 
-                    b.ToTable("Invitation");
+                    b.ToTable("Invitations");
                 });
 
             modelBuilder.Entity("CalendarApi.Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UserRole")
+                    b.Property<int>("Role")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("EventUser", b =>
                 {
-                    b.Property<int>("AttendeesId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("AttendeesId")
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("EventsId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("EventsId")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("AttendeesId", "EventsId");
 

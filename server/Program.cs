@@ -1,3 +1,4 @@
+using AutoMapper;
 using CalendarApi.Data;
 using CalendarApi.Repositories;
 using CalendarApi.Repositories.Interfaces;
@@ -12,6 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IEventRepository, EventRepository>();
+builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRegisterService, RegisterService>();
 builder.Services.AddScoped<ILoginService, LoginService>();
@@ -23,6 +26,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<CalendarDbContext>(o => o.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 

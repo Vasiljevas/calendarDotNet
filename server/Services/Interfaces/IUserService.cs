@@ -7,8 +7,8 @@ namespace CalendarApi.Services.Interfaces
   {
     IEnumerable<User> GetUsers();
     User GetUserById(Guid id);
-    Task<User> CreateUser();
-    Task<User> DeleteUser();
-    Task<User> UpdateUser();
+    User CreateUser(User user);
+    User DeleteUser(Guid id);
+    User UpdateUser(User user);
   }
 }

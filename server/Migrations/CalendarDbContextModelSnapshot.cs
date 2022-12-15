@@ -34,9 +34,9 @@ namespace CalendarApi.Migrations
 
             modelBuilder.Entity("CalendarApi.Models.Event", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("CalendarId")
                         .HasColumnType("INTEGER");
@@ -47,14 +47,11 @@ namespace CalendarApi.Migrations
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Header")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("StartTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -94,7 +91,6 @@ namespace CalendarApi.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Password")
@@ -114,8 +110,8 @@ namespace CalendarApi.Migrations
                     b.Property<Guid>("AttendeesId")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("EventsId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("EventsId")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("AttendeesId", "EventsId");
 
