@@ -29,8 +29,16 @@ namespace CalendarApi.Controllers
     [Route("/accept/{id}/{userId}")]
     public ActionResult<Invitation> AcceptInvitation(Guid id, Guid userId)
     {
-      _invitationService.AcceptInvitation(id, userId);
-      return Ok();
+      var inv = _invitationService.AcceptInvitation(id, userId);
+      return Ok(inv);
+    }
+
+    [HttpDelete]
+    [Route("/decline/{id}/{userId}")]
+    public ActionResult<Invitation> DeclineInvitation(Guid id, Guid userId)
+    {
+      var inv = _invitationService.DeclineInvitation(id, userId);
+      return Ok(inv);
     }
   }
 }

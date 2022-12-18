@@ -31,7 +31,7 @@ namespace CalendarApi.Services
       });
     }
 
-    public void AcceptInvitation(Guid id, Guid userId)
+    public Invitation AcceptInvitation(Guid id, Guid userId)
     {
       var invite = _invitationRepository.GetInvitationById(id);
       var eventI = _eventRepository.GetEventById(invite.EventId);
@@ -41,6 +41,14 @@ namespace CalendarApi.Services
       eventI.Attendees.Add(newAttendee);
       _eventRepository.UpdateEvent(eventI);
       _invitationRepository.DeleteInvitation(id);
+      return invite;
+    }
+
+    public Invitation DeclineInvitation(Guid id, Guid userId)
+    {
+      var invite = _invitationRepository.GetInvitationById(id);
+      _invitationRepository.DeleteInvitation(id);
+      return invite;
     }
   }
 }

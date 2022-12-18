@@ -9,6 +9,8 @@ namespace CalendarApi.Services.Interfaces
   {
     IEnumerable<EventDto> GetInvitationsByUserId(Guid userId);
 
-    void AcceptInvitation(Guid id, Guid userId);
+    Invitation AcceptInvitation(Guid id, Guid userId);
+
+    Invitation DeclineInvitation(Guid id, Guid userId);
   }
 }
