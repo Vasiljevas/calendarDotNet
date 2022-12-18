@@ -14,6 +14,13 @@ namespace CalendarApi.Models
     [Required]
     public String Email { get; set; }
 
-    public Attendee() {}
+    public Attendee() { }
+
+    public Attendee(Guid id, String name, String email)
+    {
+      this.Id = id;
+      this.Name = name;
+      this.Email = email;
+    }
   }
 }

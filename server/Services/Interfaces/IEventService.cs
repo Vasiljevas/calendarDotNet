@@ -9,9 +9,9 @@ namespace CalendarApi.Repositories.Interfaces
   {
     public IEnumerable<EventDto> GetEventsByUserId(Guid userId);
     public EventDetailDto GetEventById(Guid id);
-    public EventDetailDto CreateEvent(Event eventToCreate, Guid userId);
+    public EventDetailDto CreateEvent(EventFormDto eventToCreate, Guid userId);
     public IEnumerable<EventDto> DeleteEvent(Guid id, Guid userId);
-    public EventDetailDto UpdateEvent(Guid userId, Event eventToUpdate);
+    public EventDetailDto UpdateEvent(Guid userId, EventFormDto eventToUpdate);
 
   }
 }

@@ -1,5 +1,4 @@
 using System;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using CalendarApi.Repositories.Interfaces;
 using CalendarApi.Services.Interfaces;
@@ -14,12 +13,13 @@ namespace CalendarApi.Controllers
   {
     private readonly IEventService _eventService;
 
-    public EventController(IEventService eventService, IMapper mapper)
+    public EventController(IEventService eventService)
     {
       _eventService = eventService;
     }
 
     [HttpGet]
+    [Route("/user/{userId}")]
     public ActionResult<IEnumerable<EventDto>> GetEventsByUserId(Guid userId)
     {
       //only get those with matching id
@@ -27,7 +27,7 @@ namespace CalendarApi.Controllers
     }
 
     [HttpGet]
-    [Route("/{id}")]
+    [Route("/event/{id}")]
     public ActionResult<EventDetailDto> GetEventById(Guid id)
     {
       var detailedEventById = _eventService.GetEventById(id);
@@ -42,14 +42,13 @@ namespace CalendarApi.Controllers
     [Route("/{userId}")]
     public ActionResult<EventDetailDto> AddNewEvent(Guid userId, [FromBody] EventFormDto newEvent)
     {
-      var e = new Event(Guid.NewGuid(), newEvent.Title, newEvent.Description, newEvent.StartTime, newEvent.EndTime, new List<Attendee>());
-      var createdEvent = _eventService.CreateEvent(e, userId);
+      var createdEvent = _eventService.CreateEvent(newEvent, userId);
       return Ok(createdEvent);
     }
 
     [HttpPut]
     [Route("/{userId}")]
-    public ActionResult<EventDetailDto> UpdateEvent(Guid userId, [FromBody] Event updatedEvent)
+    public ActionResult<EventDetailDto> UpdateEvent(Guid userId, [FromBody] EventFormDto updatedEvent)
     {
       var e = _eventService.UpdateEvent(userId, updatedEvent);
       return Ok(e);
