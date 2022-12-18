@@ -14,12 +14,11 @@ namespace CalendarApi.Models
     [Required]
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
-
-    public List<User> Attendees { get; set; }
+    public List<Attendee> Attendees { get; set; }
 
     public Event() { }
 
-    public Event(Guid id, String title, String description, DateTime startTime, DateTime endTime, List<User> attendees)
+    public Event(Guid id, String title, String description, DateTime startTime, DateTime endTime, List<Attendee> attendees)
     {
       this.Id = id;
       this.Title = title;

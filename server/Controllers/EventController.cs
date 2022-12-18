@@ -43,9 +43,9 @@ namespace CalendarApi.Controllers
     [HttpPost]
     public ActionResult<EventDetailDto> AddNewEvent(Guid userId, Event newEvent)
     {
-      var e = new Event(Guid.NewGuid(), newEvent.Title, newEvent.Description, newEvent.StartTime, newEvent.EndTime, new List<User>());
+      var e = new Event(Guid.NewGuid(), newEvent.Title, newEvent.Description, newEvent.StartTime, newEvent.EndTime, new List<Attendee>());
       var createdEvent = _eventService.CreateEvent(e, userId);
-      return Ok(_mapper.Map<EventDetailDto>(createdEvent));
+      return Ok(createdEvent);
     }
   }
 }

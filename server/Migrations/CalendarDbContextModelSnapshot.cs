@@ -17,6 +17,30 @@ namespace CalendarApi.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
 
+            modelBuilder.Entity("CalendarApi.Models.Attendee", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("EventId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("Attendee");
+                });
+
             modelBuilder.Entity("CalendarApi.Models.Calendar", b =>
                 {
                     b.Property<int>("Id")
@@ -54,9 +78,14 @@ namespace CalendarApi.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CalendarId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Events");
                 });
@@ -105,19 +134,11 @@ namespace CalendarApi.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("EventUser", b =>
+            modelBuilder.Entity("CalendarApi.Models.Attendee", b =>
                 {
-                    b.Property<Guid>("AttendeesId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("EventsId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("AttendeesId", "EventsId");
-
-                    b.HasIndex("EventsId");
-
-                    b.ToTable("EventUser");
+                    b.HasOne("CalendarApi.Models.Event", null)
+                        .WithMany("Attendees")
+                        .HasForeignKey("EventId");
                 });
 
             modelBuilder.Entity("CalendarApi.Models.Event", b =>
@@ -125,6 +146,10 @@ namespace CalendarApi.Migrations
                     b.HasOne("CalendarApi.Models.Calendar", null)
                         .WithMany("Events")
                         .HasForeignKey("CalendarId");
+
+                    b.HasOne("CalendarApi.Models.User", null)
+                        .WithMany("Events")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("CalendarApi.Models.Invitation", b =>
@@ -138,28 +163,20 @@ namespace CalendarApi.Migrations
                     b.Navigation("Invitee");
                 });
 
-            modelBuilder.Entity("EventUser", b =>
-                {
-                    b.HasOne("CalendarApi.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("AttendeesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CalendarApi.Models.Event", null)
-                        .WithMany()
-                        .HasForeignKey("EventsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("CalendarApi.Models.Calendar", b =>
                 {
                     b.Navigation("Events");
                 });
 
+            modelBuilder.Entity("CalendarApi.Models.Event", b =>
+                {
+                    b.Navigation("Attendees");
+                });
+
             modelBuilder.Entity("CalendarApi.Models.User", b =>
                 {
+                    b.Navigation("Events");
+
                     b.Navigation("Invitations");
                 });
 #pragma warning restore 612, 618

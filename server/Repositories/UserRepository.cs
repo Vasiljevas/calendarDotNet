@@ -38,14 +38,14 @@ namespace CalendarApi.Repositories
     }
     public User GetUserById(Guid id)
     {
-      return _context.Users.ToList().First(u => u.Id == id);
+      return _context.Users.Include(u => u.Events).ToList().First(u => u.Id == id);
     }
 
     public IEnumerable<User> GetUsers() => _context.Users.ToList();
 
     public IEnumerable<Event> GetEventsByUserId(Guid id)
     {
-      var user = _context.Users.ToList().First(u => u.Id == id);
+      var user = _context.Users.Include(u => u.Events).ToList().First(u => u.Id == id);
       return user.Events;
     }
   }
