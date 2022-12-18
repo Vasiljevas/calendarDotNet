@@ -27,11 +27,12 @@ namespace CalendarApi.Services
       return eventDetails;
     }
 
-    public Event DeleteEvent(Guid id)
+    public IEnumerable<EventDto> DeleteEvent(Guid id, Guid userId)
     {
-      Event eventToDelete = _eventRepository.GetEventById(id);
       _eventRepository.DeleteEvent(id);
-      return eventToDelete;
+      var userName = _userRepository.GetUserById(userId).Name;
+      var events = _userRepository.GetEventsByUserId(userId);
+      return events.Select(e => new EventDto(e.Id, e.Title, userName));
     }
 
     public EventDetailDto UpdateEvent(Guid userId, Event eventToUpdate)

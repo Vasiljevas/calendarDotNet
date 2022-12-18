@@ -13,12 +13,10 @@ namespace CalendarApi.Controllers
   public class EventController : ControllerBase
   {
     private readonly IEventService _eventService;
-    private readonly IMapper _mapper;
 
     public EventController(IEventService eventService, IMapper mapper)
     {
       _eventService = eventService;
-      _mapper = mapper;
     }
 
     [HttpGet]
@@ -41,7 +39,8 @@ namespace CalendarApi.Controllers
     }
 
     [HttpPost]
-    public ActionResult<EventDetailDto> AddNewEvent(Guid userId, Event newEvent)
+    [Route("/{userId}")]
+    public ActionResult<EventDetailDto> AddNewEvent(Guid userId, [FromBody] EventFormDto newEvent)
     {
       var e = new Event(Guid.NewGuid(), newEvent.Title, newEvent.Description, newEvent.StartTime, newEvent.EndTime, new List<Attendee>());
       var createdEvent = _eventService.CreateEvent(e, userId);
@@ -49,10 +48,19 @@ namespace CalendarApi.Controllers
     }
 
     [HttpPut]
-    public ActionResult<EventDetailDto> UpdateEvent(Guid userId, Event updatedEvent)
+    [Route("/{userId}")]
+    public ActionResult<EventDetailDto> UpdateEvent(Guid userId, [FromBody] Event updatedEvent)
     {
       var e = _eventService.UpdateEvent(userId, updatedEvent);
       return Ok(e);
+    }
+
+    [HttpDelete]
+    [Route("/{userId}/{id}")]
+    public ActionResult<IEnumerable<EventDto>> DeleteEvent(Guid userId, Guid id)
+    {
+      var events = _eventService.DeleteEvent(id, userId);
+      return Ok(events);
     }
   }
 }
