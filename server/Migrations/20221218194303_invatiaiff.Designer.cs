@@ -3,6 +3,7 @@ using System;
 using CalendarApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CalendarApi.Migrations
 {
     [DbContext(typeof(CalendarDbContext))]
-    partial class CalendarDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221218194303_invatiaiff")]
+    partial class invatiaiff
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
@@ -38,7 +41,7 @@ namespace CalendarApi.Migrations
 
                     b.HasIndex("EventId");
 
-                    b.ToTable("Attendees");
+                    b.ToTable("Attendee");
                 });
 
             modelBuilder.Entity("CalendarApi.Models.Calendar", b =>

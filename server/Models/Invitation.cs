@@ -1,14 +1,25 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CalendarApi.Models
 {
   public class Invitation
   {
-    public int Id { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public Guid Id { get; set; }
 
     [Required]
-    public User Invitee { get; set; }
+    public String AuthorName { get; set; }
 
-    public String Message { get; set; }
+    [Required]
+    public Guid EventId { get; set; }
+
+    public Invitation(Guid id, String authorName, Guid eventId)
+    {
+      this.Id = id;
+      this.AuthorName = authorName;
+      this.EventId = eventId;
+    }
   }
 }

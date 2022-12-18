@@ -21,7 +21,7 @@ namespace CalendarApi.Repositories
     }
     public Event GetEventById(Guid id)
     {
-      return _context.Events.ToList<Event>().First(e => e.Id == id);
+      return _context.Events.Include(e => e.Attendees).ToList<Event>().First(e => e.Id == id);
     }
     public void DeleteEvent(Guid id)
     {
