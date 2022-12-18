@@ -57,5 +57,21 @@ namespace CalendarApi.Controllers
     {
       return Ok(_userRepository.GetUsers());
     }
+
+    [HttpDelete]
+    public ActionResult DeleteUser(Guid userId)
+    {
+      if (_userRepository.DeleteUser(userId))
+      {
+        return Ok();
+      }
+      return NoContent();
+    }
+
+    [HttpPut]
+    public ActionResult<User> UpdateUser(User user)
+    {
+      return Ok(_userRepository.UpdateUser(user));
+    }
   }
 }
