@@ -47,5 +47,12 @@ namespace CalendarApi.Controllers
       var createdEvent = _eventService.CreateEvent(e, userId);
       return Ok(createdEvent);
     }
+
+    [HttpPut]
+    public ActionResult<EventDetailDto> UpdateEvent(Guid userId, Event updatedEvent)
+    {
+      var e = _eventService.UpdateEvent(userId, updatedEvent);
+      return Ok(e);
+    }
   }
 }

@@ -34,10 +34,11 @@ namespace CalendarApi.Services
       return eventToDelete;
     }
 
-    public Event UpdateEvent(Event eventToUpdate)
+    public EventDetailDto UpdateEvent(Guid userId, Event eventToUpdate)
     {
       _eventRepository.UpdateEvent(eventToUpdate);
-      return eventToUpdate;
+      var eventsAuthorName = _userRepository.GetUserById(userId).Name;
+      return new EventDetailDto(eventToUpdate.Id, eventToUpdate.Title, eventsAuthorName, eventToUpdate.Description, eventToUpdate.StartTime, eventToUpdate.EndTime, eventToUpdate.Attendees);
     }
 
     public EventDetailDto GetEventById(Guid id)

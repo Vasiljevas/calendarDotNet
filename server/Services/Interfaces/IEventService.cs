@@ -11,7 +11,7 @@ namespace CalendarApi.Repositories.Interfaces
     public EventDetailDto GetEventById(Guid id);
     public EventDetailDto CreateEvent(Event eventToCreate, Guid userId);
     public Event DeleteEvent(Guid id);
-    public Event UpdateEvent(Event eventToUpdate);
+    public EventDetailDto UpdateEvent(Guid userId, Event eventToUpdate);
 
   }
 }
