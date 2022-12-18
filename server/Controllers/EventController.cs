@@ -25,17 +25,17 @@ namespace CalendarApi.Controllers
     public ActionResult<IEnumerable<EventDto>> GetEventsByUserId(Guid userId)
     {
       //only get those with matching id
-      return Ok(_mapper.Map<List<EventDto>>(this._eventService.GetEventsByUserId(userId)));
+      return Ok(_eventService.GetEventsByUserId(userId));
     }
 
     [HttpGet]
     [Route("/{id}")]
     public ActionResult<EventDetailDto> GetEventById(Guid id)
     {
-      var eventById = _eventService.GetEventById(id);
-      if (eventById != null)
+      var detailedEventById = _eventService.GetEventById(id);
+      if (detailedEventById != null)
       {
-        return Ok(_mapper.Map<EventDetailDto>(eventById));
+        return Ok(detailedEventById);
       }
       return NotFound();
     }

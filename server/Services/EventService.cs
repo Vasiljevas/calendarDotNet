@@ -40,15 +40,19 @@ namespace CalendarApi.Services
       return eventToUpdate;
     }
 
-    public Event GetEventById(Guid id)
+    public EventDetailDto GetEventById(Guid id)
     {
-      return _eventRepository.GetEventById(id);
+      var eventById = _eventRepository.GetEventById(id);
+      var eventsAuthorName = _userRepository.GetUserByEventId(id).Name;
+      return new EventDetailDto(id, eventById.Title, eventsAuthorName, eventById.Description, eventById.StartTime, eventById.EndTime, eventById.Attendees);
     }
 
-    public IEnumerable<Event> GetEventsByUserId(Guid userId)
+    public IEnumerable<EventDto> GetEventsByUserId(Guid userId)
     {
+      var userName = _userRepository.GetUserById(userId).Name;
       var allEvents = _userRepository.GetEventsByUserId(userId);
-      return allEvents;
+      var eventsDtos = allEvents.Select(e => new EventDto(e.Id, e.Title, userName));
+      return eventsDtos;
     }
   }
 }

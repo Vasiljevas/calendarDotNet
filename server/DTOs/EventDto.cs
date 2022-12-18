@@ -6,5 +6,11 @@ namespace CalendarApi.DTOs
     public String Title { get; set; }
     public String AuthorName { get; set; }
 
+    public EventDto(Guid id, String title, String authorName)
+    {
+      this.Id = id;
+      this.Title = title;
+      this.AuthorName = authorName;
+    }
   }
 }
