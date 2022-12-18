@@ -1,27 +1,24 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using CalendarApi.Models;
 
-namespace CalendarApi.Models
+namespace CalendarApi.DTOs
 {
-  public class Event
+  public class EventDetailDto
   {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
-    [Required]
     public String Title { get; set; }
+    public String AuthorName { get; set; }
     public String Description { get; set; }
-    [Required]
+    
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
     public List<Attendee> Attendees { get; set; }
 
-    public Event() { }
-
-    public Event(Guid id, String title, String description, DateTime startTime, DateTime endTime, List<Attendee> attendees)
+    
+    public EventDetailDto(Guid id, String title, String authorName, String description, DateTime startTime, DateTime endTime, List<Attendee> attendees)
     {
       this.Id = id;
       this.Title = title;
+      this.AuthorName = authorName;
       this.Description = description;
       this.StartTime = startTime;
       this.EndTime = endTime;

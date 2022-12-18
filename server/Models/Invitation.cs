@@ -6,7 +6,6 @@ namespace CalendarApi.Models
   {
     public int Id { get; set; }
 
-    public int InviteeId { get; set; }
     [Required]
     public User Invitee { get; set; }
 

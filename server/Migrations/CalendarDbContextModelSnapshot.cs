@@ -17,6 +17,30 @@ namespace CalendarApi.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
 
+            modelBuilder.Entity("CalendarApi.Models.Attendee", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("EventId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("Attendee");
+                });
+
             modelBuilder.Entity("CalendarApi.Models.Calendar", b =>
                 {
                     b.Property<int>("Id")
@@ -34,36 +58,36 @@ namespace CalendarApi.Migrations
 
             modelBuilder.Entity("CalendarApi.Models.Event", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("CalendarId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Header")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("StartTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CalendarId");
 
-                    b.ToTable("Event");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("CalendarApi.Models.Invitation", b =>
@@ -72,59 +96,49 @@ namespace CalendarApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("InviteeId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("InviteeId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Message")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("InviteeId");
 
-                    b.ToTable("Invitation");
+                    b.ToTable("Invitations");
                 });
 
             modelBuilder.Entity("CalendarApi.Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UserRole")
+                    b.Property<int>("Role")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("EventUser", b =>
+            modelBuilder.Entity("CalendarApi.Models.Attendee", b =>
                 {
-                    b.Property<int>("AttendeesId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("EventsId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("AttendeesId", "EventsId");
-
-                    b.HasIndex("EventsId");
-
-                    b.ToTable("EventUser");
+                    b.HasOne("CalendarApi.Models.Event", null)
+                        .WithMany("Attendees")
+                        .HasForeignKey("EventId");
                 });
 
             modelBuilder.Entity("CalendarApi.Models.Event", b =>
@@ -132,6 +146,10 @@ namespace CalendarApi.Migrations
                     b.HasOne("CalendarApi.Models.Calendar", null)
                         .WithMany("Events")
                         .HasForeignKey("CalendarId");
+
+                    b.HasOne("CalendarApi.Models.User", null)
+                        .WithMany("Events")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("CalendarApi.Models.Invitation", b =>
@@ -145,28 +163,20 @@ namespace CalendarApi.Migrations
                     b.Navigation("Invitee");
                 });
 
-            modelBuilder.Entity("EventUser", b =>
-                {
-                    b.HasOne("CalendarApi.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("AttendeesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CalendarApi.Models.Event", null)
-                        .WithMany()
-                        .HasForeignKey("EventsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("CalendarApi.Models.Calendar", b =>
                 {
                     b.Navigation("Events");
                 });
 
+            modelBuilder.Entity("CalendarApi.Models.Event", b =>
+                {
+                    b.Navigation("Attendees");
+                });
+
             modelBuilder.Entity("CalendarApi.Models.User", b =>
                 {
+                    b.Navigation("Events");
+
                     b.Navigation("Invitations");
                 });
 #pragma warning restore 612, 618

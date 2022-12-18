@@ -1,9 +1,38 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { register } from "../api/auth";
+import { UserRole } from "../utils/enums";
+import { User } from "../utils/types";
 
-export const RegisterScreen = () => {
+type Props = {
+  onRegister: (user: User) => void;
+};
+
+export const RegisterScreen = ({ onRegister }: Props) => {
+  const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  const navigate = useNavigate();
+
+  const handleRegister = async () => {
+    try {
+      const user = await register({
+        name,
+        email,
+        password,
+        role: UserRole.Normal,
+      });
+      onRegister(user);
+      navigate("/");
+    } catch (e) {
+      if (e instanceof Error) {
+        alert(e.message);
+      } else {
+        alert("Failed to login for a weird reason!");
+      }
+    }
+  };
 
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -20,6 +49,17 @@ export const RegisterScreen = () => {
         </div>
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           <div className="card-body">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Name</span>
+              </label>
+              <input
+                placeholder="name"
+                className="input input-bordered"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -45,7 +85,9 @@ export const RegisterScreen = () => {
               />
             </div>
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Register</button>
+              <button className="btn btn-primary" onClick={handleRegister}>
+                Register
+              </button>
             </div>
           </div>
         </div>
