@@ -48,5 +48,11 @@ namespace CalendarApi.Repositories
       var user = _context.Users.Include(u => u.Events).ToList().First(u => u.Id == id);
       return user.Events;
     }
+
+    public User GetUserByEventId(Guid eventId)
+    {
+      var user = _context.Users.Include(u => u.Events).ToList().First(u => u.Events.Any(e => e.Id == eventId));
+      return user;
+    }
   }
 }

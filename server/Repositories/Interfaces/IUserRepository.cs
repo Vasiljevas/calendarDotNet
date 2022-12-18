@@ -13,5 +13,6 @@ namespace CalendarApi.Repositories.Interfaces
     public User UpdateUser(User user);
 
     public IEnumerable<Event> GetEventsByUserId(Guid id);
+    public User GetUserByEventId(Guid eventId);
   }
 }

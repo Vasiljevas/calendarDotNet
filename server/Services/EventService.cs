@@ -27,28 +27,34 @@ namespace CalendarApi.Services
       return eventDetails;
     }
 
-    public Event DeleteEvent(Guid id)
+    public IEnumerable<EventDto> DeleteEvent(Guid id, Guid userId)
     {
-      Event eventToDelete = _eventRepository.GetEventById(id);
       _eventRepository.DeleteEvent(id);
-      return eventToDelete;
+      var userName = _userRepository.GetUserById(userId).Name;
+      var events = _userRepository.GetEventsByUserId(userId);
+      return events.Select(e => new EventDto(e.Id, e.Title, userName));
     }
 
-    public Event UpdateEvent(Event eventToUpdate)
+    public EventDetailDto UpdateEvent(Guid userId, Event eventToUpdate)
     {
       _eventRepository.UpdateEvent(eventToUpdate);
-      return eventToUpdate;
+      var eventsAuthorName = _userRepository.GetUserById(userId).Name;
+      return new EventDetailDto(eventToUpdate.Id, eventToUpdate.Title, eventsAuthorName, eventToUpdate.Description, eventToUpdate.StartTime, eventToUpdate.EndTime, eventToUpdate.Attendees);
     }
 
-    public Event GetEventById(Guid id)
+    public EventDetailDto GetEventById(Guid id)
     {
-      return _eventRepository.GetEventById(id);
+      var eventById = _eventRepository.GetEventById(id);
+      var eventsAuthorName = _userRepository.GetUserByEventId(id).Name;
+      return new EventDetailDto(id, eventById.Title, eventsAuthorName, eventById.Description, eventById.StartTime, eventById.EndTime, eventById.Attendees);
     }
 
-    public IEnumerable<Event> GetEventsByUserId(Guid userId)
+    public IEnumerable<EventDto> GetEventsByUserId(Guid userId)
     {
+      var userName = _userRepository.GetUserById(userId).Name;
       var allEvents = _userRepository.GetEventsByUserId(userId);
-      return allEvents;
+      var eventsDtos = allEvents.Select(e => new EventDto(e.Id, e.Title, userName));
+      return eventsDtos;
     }
   }
 }
