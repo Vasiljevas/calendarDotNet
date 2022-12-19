@@ -27,14 +27,18 @@ namespace CalendarApi.Services
       user.Events.Add(eventToAdd);
       _userRepository.UpdateUser(user);
 
-      newEvent.InviteeIds.ForEach(id =>
-      {
-        var newInvitation = new Invitation(Guid.NewGuid(), user.Name, eventToAdd.Id);
-        var userToInvite = _userRepository.GetUserById(id);
-        _invitationRepository.CreateInvitation(newInvitation);
-        userToInvite.Invitations.Add(newInvitation);
-        _userRepository.UpdateUser(userToInvite);
-      });
+      if(newEvent.InviteeIds != null)
+            {
+                newEvent.InviteeIds.ForEach(id =>
+                {
+                    var newInvitation = new Invitation(Guid.NewGuid(), user.Name, eventToAdd.Id);
+                    var userToInvite = _userRepository.GetUserById(id);
+                    _invitationRepository.CreateInvitation(newInvitation);
+                    userToInvite.Invitations.Add(newInvitation);
+                    _userRepository.UpdateUser(userToInvite);
+                });
+            }
+      
 
       var eventDetails = new EventDetailDto(eventToAdd.Id, eventToAdd.Title, user.Name, eventToAdd.Description, eventToAdd.StartTime, eventToAdd.EndTime, eventToAdd.Attendees);
       return eventDetails;

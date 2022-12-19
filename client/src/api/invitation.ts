@@ -10,3 +10,8 @@ export const acceptInvitation = async (id?: string, userId?: string): Promise<In
   await (
     await axios.post(`https://localhost:7237/accept/${id}/${userId}`)
   ).data
+
+export const declineInvitation = async (id?: string, userId?: string): Promise<Invitation[]> =>
+  await (
+    await axios.delete(`https://localhost:7237/decline/${id}/${userId}`)
+  ).data

@@ -5,6 +5,7 @@ using CalendarApi.Repositories.Interfaces;
 using CalendarApi.Services;
 using CalendarApi.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -20,8 +20,8 @@ export const EventCreateModal = ({ user, visible, toggleVisible, selectedDate }:
     const data: EventDTO = {
       title,
       description,
-      startTime: new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate() + 1, startHour, startMinute).toISOString(),
-      endTime: new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate() + 1, endHour, endMinute).toISOString(),
+      startTime: new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), startHour, startMinute).toISOString(),
+      endTime: new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), endHour, endMinute).toISOString(),
       inviteeIds: selectedUsers.map(user => user.id) //TODO: kai atsinaujins contractas pridet cia selected users.
     }
     await createEvent(data, user?.id);
