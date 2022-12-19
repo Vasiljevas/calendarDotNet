@@ -11,7 +11,12 @@ export const getEvents = async (id?: string): Promise<EventListItem[]> =>
     await axios.get(`https://localhost:7237/user/${id}`)
   ).data
 
-export const getEventDetails = async (id?: string): Promise<EventListItem[]> =>
+export const getEventDetails = async (id?: string): Promise<any> =>
   await (
     await axios.get(`https://localhost:7237/event/${id}`)
+  ).data
+
+export const putEvent = async (data: EventDTO, userId?: string): Promise<EventDTO[]> =>
+  await (
+    await axios.post(`https://localhost:7237/${userId}`, data)
   ).data

@@ -37,7 +37,7 @@ export const Calendar = ({ user }: Props) => {
   return (
     <div>
       <EventCreateModal user={user} visible={displayModal} toggleVisible={setDisplayModal} selectedDate={new Date(year, month, selectedDay)} />
-      <EventDetailsModal event={selectedEvent} visible={displayDetailsModal} toggleVisible={setDisplayDetailsModal} />
+      <EventDetailsModal event={selectedEvent} visible={displayDetailsModal} toggleVisible={setDisplayDetailsModal} user={user} />
       <div className="text-gray-700">
         <div className="flex flex-grow w-screen h-screen overflow-auto">
           <div className="flex flex-col flex-grow margin-auto justify-center">
