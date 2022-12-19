@@ -40,6 +40,8 @@ namespace CalendarApi.Services
       _attendeeRepository.CreateAttendee(newAttendee);
       eventI.Attendees.Add(newAttendee);
       _eventRepository.UpdateEvent(eventI);
+      user.Events.Add(eventI);
+      _userRepository.UpdateUser(user);
       _invitationRepository.DeleteInvitation(id);
       return invite;
     }
