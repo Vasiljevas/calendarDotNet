@@ -12,8 +12,6 @@ export type User = {
 
 export type Event = any;
 
-export type Invitation = any;
-
 export interface LoginData {
   email: string;
   password: string;
@@ -24,4 +22,26 @@ export interface RegisterData extends LoginData {
   email: string;
   password: string;
   role: UserRole;
+}
+
+export type EventDTO = {
+  title: string,
+  description: string,
+  startTime: string,
+  endTime: string,
+  inviteeIds: string[] | null,
+}
+
+export type EventListItem = {
+  id: string,
+  title: string,
+  authorName: string,
+}
+
+export type Invitation = {
+  id: string,
+  title: string,
+  authorName: string,
+  startTime: string,
+  endTime: string,
 }
