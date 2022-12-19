@@ -1,8 +1,13 @@
 import React from 'react';
 import { Calendar } from '../components/Calendar';
+import { User } from '../utils/types';
 
-export const MainScreen = () => {
+type Props = {
+    user?: User
+}
+
+export const MainScreen = ({ user }: Props) => {
     return (
-            <Calendar />
+        <Calendar user={user} />
     );
 }

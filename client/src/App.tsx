@@ -36,7 +36,7 @@ function App() {
             path="/"
             element={
               <PrivateRoute isAuthenticated={isAuthenticated}>
-                <MainScreen />
+                <MainScreen user={user} />
               </PrivateRoute>
             }
           />
